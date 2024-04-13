@@ -49,6 +49,9 @@ class DataBase:
         self.queues = dict()
         self.users = []
 
+    def is_user_exist(self, user_id) -> bool:
+        return any(user.user_id == user_id for user in self.users)
+
     def create_user(self, user_id):
         self.users.append(User(user_id))
 
@@ -84,6 +87,7 @@ class DataBase:
         return self.queues[queue_id].name
 
     def remove_queue(self, user_id, queue_id):
+        # TODO: получение user_id из db для этого нужен owner для очереди
         user = next((element for element in self.users if element.user_id == user_id), None)
         user.user_admin_queues.remove(queue_id)
         # TODO: удаление у каждого пользователя id очереди из списка ожидания
@@ -91,6 +95,10 @@ class DataBase:
 
     def place_in_queue(self, user_id, queue_id) -> int:
         # TODO: дописать получение места в очереди
+        return 0
+
+    def user_count(self, queue_id) -> int:
+        # TODO: дописать количество участников в очереди
         return 0
 
     def __first_empty_q_id(self) -> int:
