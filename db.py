@@ -1,6 +1,7 @@
+import copy
 import queue
 
-
+from multiprocessing import queues
 class Queue:
     name: str
     isAvailable: bool
@@ -81,7 +82,9 @@ class DataBase:
         return user.user_admin_queues
 
     def get_user_from_queue(self, queue_id) -> int:
-        return self.queues[queue_id].get()
+        id = self.queues[queue_id].get()
+        self.users[[u.user_id for u in self.users].index(id)].user_queues.remove(queue_id)
+        return id
 
     def queue_name(self, queue_id):
         return self.queues[queue_id].name
@@ -98,7 +101,6 @@ class DataBase:
         return 0
 
     def user_count(self, queue_id) -> int:
-        # TODO: дописать количество участников в очереди
         return 0
 
     def __first_empty_q_id(self) -> int:

@@ -66,9 +66,14 @@ async def admin_queue_info(callback_query: CallbackQuery, callback_data: kb.Admi
 @router.callback_query(kb.AdminQueueSettingsCallBack.filter())
 async def admin_queue_settings(callback_query: CallbackQuery, callback_data: kb.AdminQueueSettingsCallBack):
     if callback_data.move == "next":
-        # TODO: приглашение следующего
-        pass
+        """ Приглашение следующего в очереди """
+        from main import Bot, ParseMode
+        import config
+        bot = Bot(token=config.BOT_TOKEN, parse_mode=ParseMode.HTML)
+        user_id = db.get_user_from_queue(callback_data.queue_id)
+        await bot.send_message(user_id, f"Вас приглашают в очереди {db.queue_name(callback_data.queue_id)}")
     elif callback_data.move == "delete":
+        """ Удаление очереди """
         db.remove_queue(callback_query.from_user.id, callback_data.queue_id)  # TODO: убрать user_id для передачи
         await callback_query.message.edit_text(text.queues,
                                                reply_markup=kb.admin_queue_list(callback_query.from_user.id))
@@ -93,7 +98,7 @@ async def user_queue_info(callback_query: CallbackQuery, callback_data: kb.UserQ
 
 @router.callback_query(kb.UserQueueSettingsCallBack.filter())
 async def user_queue_settings(callback_query: CallbackQuery, callback_data: kb.UserQueueSettingsCallBack):
-    # TODO: выйти из очереди
+    db.separate_queue(callback_query.from_user.id, callback_data.queue_id)
     await callback_query.message.edit_text(text.queues, reply_markup=kb.user_queue_list(callback_query.from_user.id))
 
 

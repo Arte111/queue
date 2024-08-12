@@ -71,7 +71,7 @@ class UserQueueSettingsCallBack(CallbackData, prefix="user_queue_settings"):
 def user_queue(queue_id: int):
     kb = InlineKeyboardBuilder()
     kb.add(InlineKeyboardButton(text="Покинуть очередь",
-                                callback_data=AdminQueueSettingsCallBack(queue_id=queue_id).pack()))
+                                callback_data=UserQueueSettingsCallBack(queue_id=queue_id).pack()))
     kb.add(InlineKeyboardButton(text="Назад", callback_data="user_back"))
     # TODO: resize keyboard
     return kb.as_markup()

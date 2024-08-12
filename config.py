@@ -1,1 +1,3 @@
-BOT_TOKEN = "7077055409:AAHQQ9l0liWlSqu1uxB34D_3pUxTaXl9CTg"
+BOT_TOKEN = "1429899646:AAH3FF__ynvGILByaUVRAvmIfumkeP-7TuM"
+
+# бот висит на @tyoms_bot
